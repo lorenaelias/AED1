@@ -31,31 +31,6 @@ int fila_vazia(Fila f)
         return 0;
 }
 
-int insere_fim(Fila f, int elem,int pri)
-{
-    struct no *N = (struct no*) malloc(sizeof(struct no));
-    if (N == NULL) { return 0; }
-
-    N->info = elem;
-    // Insere o conteúdo (valor do elem)
-    if (fila_vazia(f) || elem <= (f)->info) {
-        N->prox = f;
-        // Aponta para o primeiro nó atual da lista
-        *f = *N;
-        // Faz a lista apontar para o novo nó
-        return 1;
-    }
-
-    // Percorrimento da lista (elem > primeiro nó da lista)
-    Fila aux = *f;
-    // Faz aux apontar para primeiro nó
-    while (aux->prox != NULL && aux->prox->pri < pri) aux = aux->prox;
-        // Insere o novo elemento na lista
-    N->prox = aux->prox;
-    aux->prox = N;
-    return 1;
-}
-
 int remove_ini(Fila f, int *elem)
 {
  if (fila_vazia(f) == 1) return 0;
@@ -70,13 +45,13 @@ int remove_ini(Fila f, int *elem)
 return 1;
 }
 
-void imprime(Fila *f)
+void imprime(Fila f)
 {
-	if(fila_vazia(*f)==1){
+	if(fila_vazia(f)==1){
 		printf("Fila vazia!\n\n");
 		return;
 	}
-    struct no* no = f->ini;
+    struct no *no = f->ini;
 
 	while (no != NULL)
     {
@@ -84,4 +59,34 @@ void imprime(Fila *f)
         no = no->prox;
     }
 	printf("\n\n");
+}
+
+int insere_elem_ord(Fila *l,int elem,int pri)
+{
+	struct no *temp = (struct no*) malloc(sizeof(struct no));
+
+	if(temp==NULL) return 0;
+
+	temp->info = elem;
+
+	if( (*l)==NULL){
+        (temp)->prox = NULL;
+		(*l)->ini = temp;
+		return 1;
+	}
+
+	if(pri <= (*l)->ini->pri){
+        temp->prox = (*l)->ini;
+        (*l)->ini = temp;
+        return 1;
+	}
+
+
+	struct no *aux = (*l)->ini;
+
+	while( aux->prox != NULL && aux->prox->pri < pri ) aux = aux->prox;
+
+	temp->prox = aux->prox;
+	aux->prox = temp;
+	return 1;
 }

@@ -7,10 +7,15 @@ int main(){
 
     imprime(f);
 
-    insere_fim(&f,5,2);
-    insere_fim(f,4,1);
-    insere_fim(f,6,3);
-    insere_fim(f,3,4);
+    //insere_ordenada(f,5,2);
+    //insere_ordenada(f,4,1);
+    //insere_ordenada(f,6,3);
+    //insere_ordenada(f,3,4);
+
+    insere_elem_ord(&f,3,4);
+    insere_elem_ord(&f,4,1);
+    insere_elem_ord(&f,6,3);
+    insere_elem_ord(&f,3,4);
 
     imprime(f);
 
