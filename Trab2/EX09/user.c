@@ -1,6 +1,5 @@
 #include "fila.h"
-#include "fila.c"
-
+//#include "fila.c" 
 int main(){
     Fila f = cria_fila();
     int elem;
