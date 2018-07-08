@@ -12,10 +12,10 @@ int main(){
     //insere_ordenada(f,6,3);
     //insere_ordenada(f,3,4);
 
-    insere_elem_ord(&f,3,4);
+    insere_elem_ord(&f,2,4);
     insere_elem_ord(&f,4,1);
     insere_elem_ord(&f,6,3);
-    insere_elem_ord(&f,3,4);
+    insere_elem_ord(&f,3,5);
 
     imprime(f);
 

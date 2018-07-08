@@ -68,10 +68,12 @@ int insere_elem_ord(Fila *l,int elem,int pri)
 	if(temp==NULL) return 0;
 
 	temp->info = elem;
+	temp->pri = pri;
 
-	if( (*l)==NULL){
+	if(fila_vazia(*l) == 1){          //! se a fila esta vazia
+        (*l)->ini = temp;
+        (*l)->fim = temp;
         (temp)->prox = NULL;
-		(*l)->ini = temp;
 		return 1;
 	}
 
@@ -81,6 +83,12 @@ int insere_elem_ord(Fila *l,int elem,int pri)
         return 1;
 	}
 
+	if(pri >= (*l)->fim->pri){
+        temp->prox = NULL;
+        (*l)->fim->prox = temp;
+        (*l)->fim = temp;
+        return 1;
+	}
 
 	struct no *aux = (*l)->ini;
 
