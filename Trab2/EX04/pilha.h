@@ -7,11 +7,11 @@ int insere_elem_INT(Pilha p, int elem);
 int remove_elem_INT(Pilha p, double *elem);
 void imprimir(Pilha p);
 
-char *converter_posfixa(char* str);
 double calculo(char* str, int *val_literais);
-int infixa_posfixa(const char *inf, char *pos);
+int infixa_posfixa(const char *inf,char *pos);
 void print_valor(char *str, int *val_literais);
 
 int validacao(char *s);
 int ehOperando(char ch);
+int ehOperador(char ch);
 int Precedencia(char ch);

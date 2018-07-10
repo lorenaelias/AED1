@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "pilha.h"
 #include<string.h>
-#define max 30
+#define max 50
 
 struct no{
 	char elem;
@@ -93,14 +93,6 @@ void imprimir(Pilha p)
 	printf("\b]\n");
 }
 
-char *converter_posfixa(char* str)
-{
-    char* aux = (char*) malloc(max*sizeof(char));
-    infixa_posfixa(str,aux);
-    strcpy(str,aux);
-    return str;
-}
-
 int validacao(char *s)
 {
     int i=0, cont=0;
@@ -145,22 +137,24 @@ double calculo(char* str, int *val_literais)
 	Pilha p=cria_pilha();
 
 	for(i=0;i<strlen(str);i++){
+
 		if(ehOperando(str[i])){
 			insere_elem_INT(p,val_literais[i]);
 		}
 
-		else
+		if(ehOperador(str[i])){
             remove_elem_INT(p,&x); remove_elem_INT(p,&y);
 
             switch(str[i]){
-                case'+': insere_elem_INT(p, x + y); break;
-                case'-': insere_elem_INT(p, x - y); break;
-                case'*': insere_elem_INT(p, x * y); break;
-                case'/': insere_elem_INT(p, x / y); break;
+                case'+': insere_elem_INT(p, y + x); break;
+                case'-': insere_elem_INT(p, y - x); break;
+                case'*': insere_elem_INT(p, y * x); break;
+                case'/': insere_elem_INT(p, y / x); break;
             }
+		}
 	}
 
-        remove_elem_INT(p,&elem);
+    remove_elem_INT(p,&elem);
 
 return elem;
 }
@@ -175,36 +169,37 @@ int ehOperador(char ch)
     return (ch == '+' || ch == '-' || ch == '*' || ch == '/');
 }
 
-int infixa_posfixa(const char *inf, char *pos)
+int infixa_posfixa(const char *inf,char *pos)
 {
 	if(inf==NULL || pos==NULL) return 0;
-	char ch;
+	char ch,x,y;
 	int j=0;
 	Pilha p=cria_pilha(); //guarda os operadores
 	Pilha q=cria_pilha(); //guarda os operandos
+    Pilha q1=cria_pilha(); // inverte q
 
-	for(int i=0;inf[i]!='\0';i++){
+	for(int i=0;i<strlen(inf);i++){
 
-        if(inf[i]=='+' || inf[i]=='-' || inf[i]=='*' || inf[i]=='/' || inf[i]=='^'){
-			insere_elem(p,inf[i]);
-		}
+        if(ehOperador(inf[i]))	insere_elem(p,inf[i]);
+
+        if(ehOperando(inf[i]))  insere_elem(q,inf[i]);
 
         if(inf[i]==')'){
-			if(remove_elem(p,&ch)==0) return 0;
-			pos[j++]=ch;
-		}
+			if( !remove_elem(q,&x) && !remove_elem(q,&y) && !remove_elem(p,&ch) ) return 0;
 
-		else{
-            insere_elem(q,inf[i]);
-			pos[j++]=inf[i];
+			insere_elem(q1,x); insere_elem(q1,y);
+			remove_elem(q1,&x);remove_elem(q1,&y);
+			pos[j++]=x;
+			pos[j++]=y;
+			pos[j++]=ch;
 		}
 	}
 
-	pos[j]='\0';
+    pos[j]='\0';
 	return 1;
 }
 
 void print_valor(char *str, int *val_literais)
 {
-	printf("Valor da expressao  [%s]  = %lf.4\n",str,calculo(str, val_literais));
+	printf("Valor da expressao  [%s]  = %lf\n",str,calculo(str, val_literais));
 }

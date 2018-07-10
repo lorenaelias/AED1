@@ -8,30 +8,28 @@ int main(){
 	int i;
 	int op=2;
 	char* str;
+	char* pos;
 	str = (char *) malloc(max*sizeof(char));
-
-	/*printf("1 - entrar com expressao posfixa\n");
-	printf("2 - entrar com expressao infixa\n");
-    scanf("%d",op);
-    printf("\n");
-*/
+    pos = (char *) malloc(max*sizeof(char));
 
         while(literais<1 || literais >11){
-            printf("quantos literais a expressao possui? ");
+            printf("Numero de literais: ");
             scanf("%d",&literais);
         }
         for(i=0;i<literais;i++){
-            printf("valor do literal '%c' : ",lit[i]);
+            printf("Valor do literal '%c' : ",lit[i]);
             scanf("%d",&val_literais[i]);
         }
 
         printf("Expressao: "); 	scanf("%s",str);
 
+
     if(op == 2){
-		str = converter_posfixa(str);
-		printf("Forma posfixa: %s\n",str);
+		infixa_posfixa(str,pos);
+		printf("Forma posfixa: %s\n",pos);
 		print_valor(str,val_literais);
 	}
+
     else
         print_valor(str,val_literais);
 
