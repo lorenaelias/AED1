@@ -59,12 +59,12 @@ void print_lista(Lista *l)
 
 }
 
-int remove_todos(Lista **l, int elem)  
+int remove_todos(Lista **l, int elem)
 {
 	int cont=0;
     Lista *temp = *l;
 	if(lista_vazia(temp)) return 0;
-	
+
 	while(temp!=NULL){
 		if(temp->elemento==elem){
 			remove_elem(l,temp->elemento);
@@ -75,14 +75,14 @@ int remove_todos(Lista **l, int elem)
 return cont;
 }
 
-int insere_fim(Lista *l, int elem) 
+int insere_fim(Lista *l, int elem)
 {
 	Lista *temp;
 	temp = (Lista *) malloc(sizeof(Lista));
-	
+
 	if(temp==NULL) return 0;
 	temp->elemento = elem;
-	
+
 	if(l==NULL){
 		temp->prox = l;
 		l = temp;
@@ -91,15 +91,15 @@ int insere_fim(Lista *l, int elem)
 
 	Lista *aux;
 	aux = l;
-	
+
 	while(aux->prox!=NULL){
 		aux = aux->prox;
 	}
-	
+
 	temp->prox = aux->prox;
 	aux->prox = temp;
-	
-return 1;	
+
+return 1;
 }
 
 int remove_pares(Lista **l)
@@ -107,7 +107,7 @@ int remove_pares(Lista **l)
 	int cont=0;
 	Lista *temp = *l;
 	if(lista_vazia(temp)) return 0;
-	
+
 	while(temp!=NULL){
 		if(temp->elemento%2==0){
 			remove_elem(l,temp->elemento);
@@ -133,11 +133,11 @@ int tamanho(Lista *l)
 int maior(Lista *l)
 {
 	Lista *aux = l;
-	
+
 	if(lista_vazia(aux))return 0;
-	
+
 	int maior = aux->elemento;
-	
+
 	while(aux != NULL){
 		if(aux->elemento>maior) maior = aux->elemento;
 	aux = aux->prox;
@@ -150,16 +150,16 @@ Lista* concatenar(Lista **A, Lista **B)
 	Lista *C = cria_lista();
 	Lista *temp = *A;
 	Lista *temp_aux = *B;
-	
+
 	while(temp!=NULL){
 		insere_elem(&C,temp->elemento);
 		temp = temp->prox;
-		
+
 	}
 	while(temp_aux!=NULL){
 		insere_elem(&C,temp_aux->elemento);
 		temp_aux = temp_aux->prox;
-		
+
 	}
 	return C;
 }
